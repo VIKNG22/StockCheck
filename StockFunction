@@ -1,0 +1,78 @@
+const produtos = [
+    { nome: "Notebook", preco: 3500, quantidade: 5 , categoria : "Computadores" },
+    { nome: "Mouse", preco: 80, quantidade: 10 , categoria : "Acessorios"},
+    { nome: "Teclado", preco: 150, quantidade: 7 , categoria : "Acessorios"},
+    { nome: "Monitor", preco: 1200, quantidade: 3 , categoria : "Computadores"},
+    { nome: "Headset", preco: 250, quantidade: 0 , categoria : "Acessorios"}
+];
+
+function analisarEstoque(produtos) {
+    let valorTotal = 0;
+    let totalProdutos = 0;
+    let produtosEsgotados = [];
+    let maiorPreco = 0;
+    let produtoMaisCaro = "";
+    
+    for (let i = 0 ; i < produtos.length ; i++) {
+        let total = produtos[i].preco * produtos[i].quantidade;
+        valorTotal += total;
+        totalProdutos += produtos[i].quantidade
+        if (produtos[i].quantidade === 0) {
+            produtosEsgotados.push(produtos[i].nome)
+        }
+
+        if (produtos[i].preco > maiorPreco) {
+            maiorPreco = produtos[i].preco;
+            produtoMaisCaro = produtos[i].nome;
+        }
+    }
+    return{
+        valorTotal: valorTotal ,
+        totalProdutos: totalProdutos ,
+        produtosEsgotados: produtosEsgotados ,
+        produtoMaisCaro: produtoMaisCaro
+    }
+}
+
+function buscarProdutosEstoqueBaixo(produtos) {
+    const baixos = [];
+
+    for(let j = 0 ; j < produtos.length ; j++) {
+        if(produtos[j].quantidade <= 5) {
+            baixos.push(produtos[j].nome)
+        }
+    }
+    return {
+        baixos: baixos
+    }
+}
+
+let resultado1 = analisarEstoque(produtos);
+console.log(resultado1.valorTotal);
+console.log(resultado1.totalProdutos);
+console.log(resultado1.produtosEsgotados);
+console.log(resultado1.produtoMaisCaro);
+
+let resultado2 = buscarProdutosEstoqueBaixo(produtos);
+console.log(resultado2);
+
+function calcularValorPorCategoria(produtos) {
+    let soma1 = 0;
+    let soma2 = 0;
+    for (let k = 0 ; k < produtos.length ; k++) {
+        let multCategoria = produtos[k].preco * produtos[k].quantidade;
+        if (produtos[k].categoria === "Computadores") {
+            soma1 += multCategoria
+        }
+        if (produtos[k].categoria === "Acessorios") {
+            soma2 += multCategoria
+        }
+    }
+    return {
+        Computadores: soma1 ,
+        Acessorios: soma2
+    }
+}
+
+let resultado3 = calcularValorPorCategoria(produtos);
+console.log(resultado3);
